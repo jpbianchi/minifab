@@ -1,0 +1,114 @@
+gitpod /workspace/minifab (main) $ ./minifab up
+Using default spec file
+Unable to find image 'hyperledgerlabs/minifab:latest' locally
+latest: Pulling from hyperledgerlabs/minifab
+72cfd02ff4d0: Pull complete 
+9e072c8ab521: Pull complete 
+677fad5e896e: Pull complete 
+bb28fd40e394: Pull complete 
+0395b24403c2: Pull complete 
+a28d8980340b: Pull complete 
+4f4fb700ef54: Pull complete 
+Digest: sha256:2edc1d60f1bdd68b3f30d436f62989e5abeae4d75fd7e1f705827ebe4e766d39
+Status: Downloaded newer image for hyperledgerlabs/minifab:latest
+Minifab Execution Context:
+    FABRIC_RELEASE=2.3.0
+    CHANNEL_NAME=mychannel
+    PEER_DATABASE_TYPE=golevel
+    CHAINCODE_LANGUAGE=go
+    CHAINCODE_NAME=simple
+    CHAINCODE_VERSION=1.0
+    CHAINCODE_INIT_REQUIRED=true
+    CHAINCODE_PARAMETERS="init","a","200","b","300"
+    CHAINCODE_PRIVATE=false
+    CHAINCODE_POLICY=
+    TRANSIENT_DATA=
+    BLOCK_NUMBER=newest
+    EXPOSE_ENDPOINTS=false
+    CURRENT_ORG=org0.example.com
+    HOST_ADDRESSES=10.0.5.2
+    TARGET_ENV=DOCKER
+    WORKING_DIRECTORY: /workspace/minifab
+.....
+# Preparing for the following operations: *********************
+  verify options, download images, generate certificates, start network, network status, channel create, channel join, anchor update, profile generation, cc install, cc approve, cc commit, cc initialize, discover
+..................
+# Running operation: ******************************************
+  verify options
+..
+# Running operation: ******************************************
+  download images
+......................
+# Running operation: ******************************************
+  generate certificates
+...............................................................................................................................................
+# Running operation: ******************************************
+  start network
+........................
+# Running operation: ******************************************
+  network status
+...
+# Current Minifabric image ID and created at date time ********
+  1c003525f285   2023-04-02 17:59:04 +0000 UTC
+.....
+# Docker node status ******************************************
+  mysite : Up 7 seconds
+  ca1.org1.example.com : Up 8 seconds
+  ca1.org0.example.com : Up 9 seconds
+  orderer3.example.com : Up 10 seconds
+  orderer2.example.com : Up 10 seconds
+  orderer1.example.com : Up 11 seconds
+  peer2.org1.example.com : Up 12 seconds
+  peer1.org1.example.com : Up 13 seconds
+  peer2.org0.example.com : Up 13 seconds
+  peer1.org0.example.com : Up 14 seconds
+
+# Fabric network peer and orderer node health status **********
+  peer1.org0.example.com "OK"
+  peer2.org0.example.com "OK"
+  peer1.org1.example.com "OK"
+  peer2.org1.example.com "OK"
+  orderer1.example.com "OK"
+  orderer2.example.com "OK"
+  orderer3.example.com "OK"
+  Network Status: 100%
+
+# Running operation: ******************************************
+  channel create
+......
+# Running operation: ******************************************
+  channel join
+...........................
+# Running operation: ******************************************
+  anchor update
+............
+# Running operation: ******************************************
+  profile generation
+.................................
+# Running operation: ******************************************
+  cc install
+.......
+# Run the chaincode install script on cli container ***********
+  non-zero return code
+  go: github.com/hyperledger/fabric@v1.4.1: Get "https://proxy.golang.org/github.com/hyperledger/fabric/@v/v1.4.1.mod": net/http: TLS handshake timeout
+  Error: failed to normalize chaincode path: 'go list' failed with: go: github.com/hyperledger/fabric@v1.4.1: Get "https://proxy.golang.org/github.com/hyperledger/fabric/@v/v1.4.1.mod": net/http: TLS handshake timeout: exit status 1
+  Error: failed to read chaincode package at 'simple_go_1.0.tar.gz': open simple_go_1.0.tar.gz: no such file or directory
+
+# STATS *******************************************************
+minifab: ok=356 failed=1
+
+real    3m30.077s
+user    1m57.126s
+sys     0m27.242s
+gitpod /workspace/minifab (main) $ docker ps
+CONTAINER ID   IMAGE                              COMMAND                  CREATED         STATUS         PORTS      NAMES
+fbf0cc36ca17   hyperledger/fabric-tools:2.3.0     "/bin/sh"                2 minutes ago   Up 2 minutes              mysite
+b148240fe81f   hyperledger/fabric-ca:1.4          "fabric-ca-server st…"   2 minutes ago   Up 2 minutes   7054/tcp   ca1.org1.example.com
+05fe8cc6a3a9   hyperledger/fabric-ca:1.4          "fabric-ca-server st…"   2 minutes ago   Up 2 minutes   7054/tcp   ca1.org0.example.com
+099f666ac132   hyperledger/fabric-orderer:2.3.0   "orderer"                2 minutes ago   Up 2 minutes   7050/tcp   orderer3.example.com
+ecf59e3e64e8   hyperledger/fabric-orderer:2.3.0   "orderer"                2 minutes ago   Up 2 minutes   7050/tcp   orderer2.example.com
+702ab8a3ab89   hyperledger/fabric-orderer:2.3.0   "orderer"                2 minutes ago   Up 2 minutes   7050/tcp   orderer1.example.com
+b0279a6bc379   hyperledger/fabric-peer:2.3.0      "peer node start"        2 minutes ago   Up 2 minutes   7051/tcp   peer2.org1.example.com
+39ab3418080f   hyperledger/fabric-peer:2.3.0      "peer node start"        2 minutes ago   Up 2 minutes   7051/tcp   peer1.org1.example.com
+44fc008f6d1e   hyperledger/fabric-peer:2.3.0      "peer node start"        2 minutes ago   Up 2 minutes   7051/tcp   peer2.org0.example.com
+258d91a2909a   hyperledger/fabric-peer:2.3.0      "peer node start"        2 minutes ago   Up 2 minutes   7051/tcp   peer1.org0.example.com

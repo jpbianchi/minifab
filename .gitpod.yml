@@ -1,5 +1,12 @@
-image:
-  file: .gitpod.Dockerfile
+ image:
+   file: .gitpod.Dockerfile
 tasks:
-  - command: minifab up
+  - command: ./minifab up
 
+
+#tasks:
+#  - before: pip3 install -r requirements.txt
+#    command: redis-server --daemonize yes && pyenv shell 3.8.13 && echo "Welcome to your Workspace"
+#vscode:
+#  extensions:
+#    - ms-python.python
