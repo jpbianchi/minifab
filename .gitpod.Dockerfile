@@ -3,8 +3,7 @@ FROM hyperledgerlabs/minifab:latest
 
 USER root
 
-RUN sudo apt-get update && \
-    sudo apt-get install -y git
+RUN apt-get install -y git
 
 # ENV PATH="/usr/lib/postgresql/10/bin:$PATH"
 
