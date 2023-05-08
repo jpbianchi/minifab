@@ -1,9 +1,9 @@
-#FROM gitpod/workspace-full:latest
-FROM hyperledgerlabs/minifab:latest
+FROM gitpod/workspace-full:latest
+# FROM hyperledgerlabs/minifab:latest
 
-USER root
+# USER root
 
-RUN apt-get install -y git
+# RUN apt-get install -y git
 
 # ENV PATH="/usr/lib/postgresql/10/bin:$PATH"
 
