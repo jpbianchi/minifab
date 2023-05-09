@@ -1,0 +1,31 @@
+# after creating the gitpod VM for Ubunbu 20.4
+# from https://github.com/jpbianchi/gitpod-ubuntu-20.04
+# I had to also do
+
+- install python: 
+    sudo apt-get update
+    sudo apt-get install python3.8
+    python3.8 --version
+
+- install minifab
+    git clone github.com/jpbianchi/minifab
+
+- install the 'ip' command
+    sudo apt-get install iproute2
+
+- install docker:
+    sudo apt-get update
+    sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+    sudo apt-get update
+    sudo apt-get install docker-ce docker-ce-cli containerd.io
+    sudo systemctl status docker
+    sudo service docker start
+
+    - install go 
+        see file install_go.sh (created with chatGPT)
+        sudo ./install_go.sh
