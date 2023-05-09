@@ -1,0 +1,46 @@
+#!/bin/bash
+
+[ ! -d "$(pwd)/vars" ] && mkdir vars
+if type ip > /dev/null 2>&1; then
+echo "Using first ADDRS"  
+  # it's the same as the one after 'else' but it uses 'ip addr' instead of ifconfig
+  ADDRS=$(ip addr|grep 'inet '|grep -v '\.1/'|tr -s ' '|awk '{$1=$1};1'|cut -d ' ' -f 2|cut -d '/' -f 1|paste -sd "," -|sed s/addr://g)
+  # this gives the address 10.0.5.2 only, no 127.0.xxx
+  # see https://github.com/hyperledger-labs/minifabric/issues/3#issuecomment-584465348
+  # ADDRS=$(ip addr| grep 'inet ' | grep -v '\.1 ' | tr -s ' ' | awk '{$1=$1};1' | cut -d ' ' -f 2|cut -d '/' -f 1|paste -sd "," -)
+
+else 
+  ADDRS=$(ifconfig|grep 'inet '|grep -v '\.1 '|tr -s ' '|awk '{$1=$1};1'|cut -d ' ' -f 2|cut -d '/' -f 1|paste -sd "," -|sed s/addr://g)
+  # see https://github.com/hyperledger-labs/minifabric/issues/3#issuecomment-584465348
+  echo "Using second ADDRS"
+  # ADDRS=$(ifconfig | grep 'inet ' | grep -v '\.1 ' | tr -s ' ' | awk '{$1=$1};1' | cut -d ' ' -f 2|cut -d '/' -f 1|paste -sd "," -)
+  
+fi
+
+echo "ADDRS=$ADDRS"  # 127.0.0.1,10.0.5.2,172.17.0.1,172.24.0.1,172.18.0.1
+
+if [ -f "$(pwd)/spec.yaml" ]; then
+  echo "Using spec file: $(pwd)/spec.yaml"
+  minifab_opt="${minifab_opt} -v $(pwd)/spec.yaml:/home/spec.yaml"
+else
+  echo "Using default spec file"
+fi
+
+# inherit proxy environment variables from terminal shell, to support fabric setup onto cloud managed k8s behind proxy
+#   for ansible x k8s ops
+# minifab_opt="${minifab_opt} -e K8S_AUTH_PROXY=${K8S_AUTH_PROXY} -e K8S_AUTH_PROXY_HEADERS_PROXY_BASIC_AUTH=${K8S_AUTH_PROXY_HEADERS_PROXY_BASIC_AUTH}"
+#   for fabric-tools ops
+# minifab_opt="${minifab_opt} -e https_proxy=${https_proxy} -e no_proxy=${no_proxy}"
+
+echo "minifab_opt=$minifab_opt"
+# I removed ${minifab_opt} from the command since it was giving an error about some network issue
+
+docker run --rm --name minifab -e "ADDRS=$ADDRS"  \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v $(pwd)/vars:/home/vars  ${minifab_opt}  hyperledgerlabs/minifab:latest   /home/main.sh "$@"
+
+# docker run --rm --name minifab -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd)/vars:/home/vars \
+#             -e "ADDRS=$ADDRS" ${minifab_opt} hyperledgerlabs/minifab:latest /home/main.sh "$@"
+
+# if issues, run ./minifab down, then ./minifab/cleanup, then ./minifab up 
+# ./minifab  restart -o org0.example.com

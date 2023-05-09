@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# List of container names to be removed
+containers=(
+  "ca1.org0.example.com"
+  "ca1.org1.example.com"
+  "peer1.org0.example.com"
+  "peer2.org0.example.com"
+  "peer1.org1.example.com"
+  "peer2.org1.example.com"
+  "orderer1.example.com"
+  "orderer2.example.com"
+  "orderer3.example.com"
+  "mysite"
+  "ca1.org0.com"
+  "ca1.org1.com"
+  "peer1.org0.com"
+  "peer2.org0.com"
+  "peer1.org1.com"
+  "peer2.org1.com"
+  "orderer1.com"
+  "orderer2.com"
+  "orderer3.com"
+)
+
+# Iterate through the container list and remove each one
+for container in "${containers[@]}"; do
+  echo "Removing container: $container"
+  docker rm -f "$container"
+done
+
+echo "All specified containers have been removed."
