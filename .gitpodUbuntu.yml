@@ -1,0 +1,19 @@
+image: ghcr.io/jpb/gitpod-ubuntu-20.04:latest  # was ghcr.io/traversaro/gitpod-ubuntu-20.04:latest
+ports:
+- port: 6080
+  onOpen: notify
+- port: 10000-20000
+  onOpen: ignore
+workspaceLocation: "."
+tasks:
+- command: start-vnc-session.sh
+- command: gp ports await 6080 && gp preview $(gp url 6080)
+
+# Port 6080 is often used as a web-based virtual network computing (VNC) client
+# In the case of port 6080, a VNC server is running on a remote computer, and a 
+# web-based VNC client is used to access and control the server. This web-based VNC 
+# client is typically accessed through a web browser using a URL in the form of 
+# http://<server_ip_address>:6080/vnc.html.
+
+# Port 6080 is not assigned to any specific service or application by the Internet 
+# Assigned Numbers Authority (IANA), but it is often used by web-based VNC clients.
